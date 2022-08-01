@@ -1,15 +1,13 @@
-<ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
-  <<ng-template>
+  <ng-template>
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button (click)="cancel()">Cancle</ion-button>
+          <ion-button >Cancle</ion-button>
         </ion-buttons>
         <ion-title>Welcome</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+          <ion-button  [strong]="true">Confirm</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
   </ng-template>
-</ion-modal>
