@@ -1,18 +1,14 @@
-<ion-content>
-  <ion-card>
+  <ion-card *ngFor="let event of events">
     <ion-item>
       <h1>
-        {{events[0].title}}
+        {{event.title}}
       </h1>
-      <ion-label>
-        {{events[0].startTime}}
-      </ion-label>
-      <ion-label>
-        {{events[0].endTime}}
+      <ion-label slot="end">
+        <p>{{event.startTime}}</p>
+        <p>{{event.endTime}}</p>
       </ion-label>
     </ion-item>
   </ion-card>
-</ion-content>
 <!-- <p>
   events
 </p> -->

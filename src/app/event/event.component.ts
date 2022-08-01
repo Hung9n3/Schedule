@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { format } from 'date-fns';
 import { Event } from '../Model/Event';
 
 @Component({
@@ -8,6 +9,7 @@ import { Event } from '../Model/Event';
 })
 export class EventComponent implements OnInit {
 
+  @Input('number') number : number;
   events: Event[] = [ 
   new Event(false, new Date("2022-8-11"), new Date(), "Title" ,1),
   new Event(false, new Date("2022-8-11"), new Date(), "Title" ,2),
@@ -22,9 +24,6 @@ export class EventComponent implements OnInit {
 
   getEvent(){
 
-  }
-  trackEvent(index: number, itemObject: any){
-    return itemObject.id
   }
 
 }
