@@ -6,6 +6,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 
 @NgModule({
   declarations: [AppComponent],
