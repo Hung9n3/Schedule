@@ -52,7 +52,7 @@
           <ion-item *ngIf="showPickerStart">
             <ion-datetime
               #pickStart
-              (ionChange)="onChangestart()"
+              (ionChange)="onChangestart(pickStart.value)"
             >
             </ion-datetime>
           </ion-item>
@@ -62,13 +62,12 @@
           </ion-item>
           <ion-item *ngIf="showPickerEnd">
             <ion-datetime
-              #pickStart
-              (ionChange)="onChangestart()"
+              #pickEnd
+              (ionChange)="onChangeend(pickEnd.value)"
             >
             </ion-datetime>
           </ion-item>
         </ion-card>
-
         <ion-button expand="full"> Save </ion-button>
       </ion-content>
     </ng-template>

@@ -15,9 +15,11 @@ export class Tab1Page {
   showPickerStart:boolean = false;
   showPickerEnd:boolean = false;
   start:Date;
+  startValue: string = format(new Date(), 'yyyy-MM-dd') + 'T07:00:00:000Z';
+  endValue:string = format(new Date(), 'yyyy-MM-dd') + 'T07:00:00:000Z';
   end:Date;
-  formatstart:string = format(parseISO(format(new Date(), 'yyyy-MM-dd') + 'T07:00:00.000Z'),'HH:mm, MMM-d,yyyy');
-  formatend: string = format(parseISO(format(new Date(), 'yyyy-MM-dd') + 'T07:00:00.000Z'),'HH:mm, MMM-d,yyyy');
+  formatstart:string = format(parseISO(format(new Date(), 'yyyy-MM-dd')),'HH:mm, MMM-d,yyyy');
+  formatend: string = format(parseISO(format(new Date(), 'yyyy-MM-dd')),'HH:mm, MMM-d,yyyy');
   constructor(
   ) {}
   @ViewChild(IonModal) modal: IonModal;
@@ -29,17 +31,14 @@ export class Tab1Page {
   confirm() {
     this.modal.dismiss('confirm');
   }
-
-  getFromPicker(value:string){
-
+  onChangestart(value){
+    this.start = new Date(value)
+    this.startValue = 
+    this.formatstart = format(parseISO(value),'HH:mm, MMM-d,yyyy');
   }
-  openStart(){
-    !this.showPickerStart
-  }
-  onChangestart(){}
-  onChangeend(){}
-  openEnd(){
-    !this.showPickerEnd
+  onChangeend(value){
+    this.end = new Date(value)
+    this.formatend = format(parseISO(value),'HH:mm, MMM-d,yyyy');
   }
   onWillDismiss(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
