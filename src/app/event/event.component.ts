@@ -9,18 +9,23 @@ import { Event } from '../Model/Event';
 })
 export class EventComponent implements OnInit {
 
-  @Input('number') number : number;
-  events: Event[] = [ 
+  @Input('currentDate') currentDate : string;
+  @Input() events: Event[] = [ 
   new Event(false, new Date("2022-8-11"), new Date(), "Title" ,1),
-  new Event(false, new Date("2022-8-11"), new Date(), "Title" ,2),
-  new Event(false, new Date("2022-8-11"), new Date(), "Title" ,3),
-  new Event(false, new Date("2022-8-11"), new Date(), "Title" ,4),
-  new Event(false, new Date("2022-8-11"), new Date(), "Title", 5)
+  new Event(false, new Date("2022-8-13"), new Date(), "Title" ,2),
+  new Event(false, new Date("2022-8-2"), new Date(), "Title" ,3),
+  new Event(false, new Date("2022-8-4"), new Date(), "Title" ,4),
+  new Event(false, new Date("2022-8-7"), new Date(), "Title", 5)
 ];
   dateValue = new Date(Date.now()).toISOString()
-  constructor() { }
+  constructor() { 
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.currentDate)
+    console.log('abcd')
+
+  }
 
   getEvent(){
 

@@ -1,4 +1,20 @@
 
   <ion-datetime #calendar presentation="date" [value]="value" (ionChange) = "ValueChange(calendar.value)"></ion-datetime>
-  <app-event [number]="1"></app-event>
-
+  <ion-card *ngFor="let event of showEvents">
+    <ion-item no-lines>
+      <h1>
+        {{event.title}}
+      </h1>
+      <ion-label *ngIf="event.isEndDate " slot="end">
+        <p>End </p>
+        <p>{{event.endTime}}</p>
+      </ion-label>
+      <ion-label *ngIf="event.isStartDate " slot="end">
+        <p>Start </p>
+        <p>{{event.startTime}}</p>
+      </ion-label>
+      <ion-label *ngIf="event.allDay" slot="end">
+        <p>All-day</p>
+      </ion-label>
+    </ion-item>
+  </ion-card>
