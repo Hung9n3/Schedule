@@ -1,5 +1,5 @@
 
-  <ion-datetime #calendar locale="vn-VN" presentation="date-time" [value]="value" (ionChange) = "ValueChange(calendar.value)"></ion-datetime>
+  <ion-datetime #calendar locale="vn-VN" presentation="date" [value]="value" (ionChange) = "ValueChange(calendar.value)"></ion-datetime>
   <ion-card *ngFor="let event of showEvents">
     <ion-item no-lines>
       <h1>
