@@ -55,7 +55,16 @@ export class SortedEvent{
          this.isEndDate = isEndDate;
     }
     
- }export interface IRange {
-    startTime : Date;
-    endTime: Date;
-}
+ }
+ export class eventCard {
+    key:number;
+    list: any[];
+    /**
+     *
+     */
+    constructor(key:number,
+        list: any[]) {
+        this.key = key;
+        this.list = list
+    }
+ }

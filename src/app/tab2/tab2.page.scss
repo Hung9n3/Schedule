@@ -63,8 +63,16 @@
     border: none !important;
     font-weight: bold;
   }
+  .monthview-disabled{
+    color: red!important;
+  }
+  .text-muted{
+    color: gray!important
+  }
+  .weekModeHeader{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   
-  //   .monthview-primary-with-event{
-  //     background-color: navajowhite !important;
-  //   }
 }

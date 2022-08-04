@@ -11,14 +11,14 @@
 
 <ion-content [fullscreen]="true">
   <ion-toolbar>
-    <ion-segment [value]="calendar.mode">
-      <ion-segment-button value="month">
+    <ion-segment value="month">
+      <ion-segment-button (click)="changeMode('month')" value="month">
         <ion-label>Month</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="week">
+      <ion-segment-button (click)="changeMode('week')">
         <ion-label>Week</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="day">
+      <ion-segment-button (click)="changeMode('day')">
         <ion-label>Day</ion-label>
       </ion-segment-button>
     </ion-segment>
@@ -64,19 +64,40 @@
     [currentDate]="calendar.currentDate"
     (onEventSelected)="onEventSelected($event)"
     (onTitleChanged)="changeTitle($event)"
+    (onTimeSelected)="onTimeSelected($event)"
     [startHour]="6"
     [endHour]="20"
     [step]="30"
     [startingDayWeek]="1"
     [monthviewDisplayEventTemplate]="template"
+    [weekviewHeaderTemplate]="weekHeader"
+    [markDisabled]="markDisabled"
+    formatWeekViewDayHeader="d"
   >
   </calendar>
+  <ion-item lines="none">
+    <ion-text>lunar datetime</ion-text>
+      <ion-icon slot="end" name="happy-outline"></ion-icon>
+  </ion-item>
+  <br>
+  <ion-item *ngFor="let event of eventByDate">
+
+  </ion-item>
   <ng-template #template let-view="view" let-row="row" let-col="col">
     <div [class.with-event]="view.dates[row*7+col].events.length">
       {{view.dates[row*7+col].label}}
       <div class="indicator-container">
-        <div class="event-indicator" *ngFor="let e of view.dates[row*7+col].events"></div>
+        <div
+          class="event-indicator"
+          *ngFor="let e of view.dates[row*7+col].events"
+        ></div>
       </div>
     </div>
+  </ng-template>
+  <ng-template #weekHeader let-viewDate="viewDate">
+    <td class="weekModeHeader" tappable (click)="onSelectWeekmode(viewDate.date)">
+      <div>{{viewDate.date.toLocaleString('vi-vi', {weekday: 'long'})}}</div>
+      <div class="custom-day-header">{{ viewDate.dayHeader }}</div>
+    </td>
   </ng-template>
 </ion-content>

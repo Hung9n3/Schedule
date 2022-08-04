@@ -1,8 +1,10 @@
-import { formatDate } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { Component, Inject, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
+import { format } from 'date-fns';
 import { CalendarComponent } from 'ionic2-calendar';
 import { CalModalPage } from '../pages/cal-modal/cal-modal.page';
+import {Event, eventCard} from '../Model/Event'
 
 @Component({
   selector: 'app-tab2',
@@ -10,15 +12,24 @@ import { CalModalPage } from '../pages/cal-modal/cal-modal.page';
   styleUrls: ['tab2.page.scss'],
 })
 export class Tab2Page implements OnInit {
-  eventSource = [];
+  eventSource = [
+    {title: 'event1',startTime: new Date("2022/8/1 10:00:00"),endTime: new Date("2022/8/1 13:00:00"),allDay: false, color:"#5494E6"},
+    {title: 'event2',startTime: new Date("2022/8/4 8:00:00"),endTime: new Date("2022/8/4 12:00:00"),allDay: false, color:"#5494E6"},
+    {title: 'event3',startTime: new Date("2022/8/6 8:00:00"),endTime: new Date("2022/8/7 12:00:00"),allDay: false, color:"#5494E6"},
+    {title: 'event4',startTime: new Date("2022/8/5 9:00:00"),endTime: new Date("2022/8/6 12:00:00"),allDay: false, color:"#5494E6"},
+
+  ];
+  eventCards :eventCard[] = [];
+  eventByDate = [];
   viewTitle: string;
-  start1 = new Date(2022, 8, 4, 8, 0, 0, 0)
-  start2 = new Date(2022,8,4,10,0,0,0)
-  end1 = new Date(2022, 8,5,12,0,0,0)
-  end2 = new Date(2022,8,7,14,0,0,0)
   calendar = {
     mode: "month",
     currentDate: new Date(),
+    formatDate: {
+      formatWeekViewDayHeader: function(date:Date) {
+        return 'd';
+    },
+    }
   };
 
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
@@ -26,17 +37,10 @@ export class Tab2Page implements OnInit {
   constructor(
     private alertCtrl: AlertController,
     @Inject(LOCALE_ID) private locale: string,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    public datepipe: DatePipe
   ) {}
   ngOnInit(): void {
-    this.eventSource.push({title: 'event1',
-    startTime: this.start1,
-    endTime: this.end1,
-    allDay: false,})
-    this.eventSource.push({title: 'Event2',
-    startTime: this.start2,
-    endTime: this.end2,
-    allDay: false,})
     console.log(this.eventSource)
   }
   next() {
@@ -61,7 +65,12 @@ export class Tab2Page implements OnInit {
     });
     alert.present();
   }
-  
+  changeMode(mode) {
+    this.calendar.mode = mode;
+}
+onTimeSelected = (ev: { selectedTime: Date, events: any[], disabled: boolean }) => {
+  this.eventByDate = ev.events;
+}
   createRandomEvents() {
     var events = [];
     for (var i = 0; i < 50; i += 1) {
@@ -158,5 +167,42 @@ export class Tab2Page implements OnInit {
         this.myCal.loadEvents();
       }
     });
+  }
+  markDisabled = (date: Date) => { let dateFormatted = this.datepipe.transform(date, "EEE") 
+  if (dateFormatted == "Th 7" || dateFormatted == "CN") { return true } else { return false } };
+
+  onSelectWeekmode(day:Date){
+    console.log(day);
+  }
+  sortEvent(){
+    
+  }
+  dayCompare(event:Event, selected:string): boolean{
+    var start = new Date(format(event.startTime, 'yyyy-MM-dd'))
+    var end = new Date(format(event.endTime, 'yyyy-MM-dd'))
+    var selecteddate = new Date(format(new Date(selected), 'yyyy-MM-dd'))
+    return (start <= selecteddate && end >= selecteddate)
+  }
+  checkifAllday(event:Event, selected:string):boolean{
+    var start = new Date(format(event.startTime, 'yyyy-MM-dd'))
+    console.log("Start:"+ start)
+    var end = new Date(format(event.endTime, 'yyyy-MM-dd'))
+    console.log("End:"+ end)
+    var selecteddate = new Date(format(new Date(selected), 'yyyy-MM-dd'))
+    console.log("Today", selecteddate)
+    return !(start.getTime() == selecteddate.getTime() || end.getTime() == selecteddate.getTime())
+  }
+  getHourMinute(date:Date):string{
+    return date.getHours() + ':' + date.getMinutes();
+  }
+  isEndDate(element:Event, selected:string):boolean{
+    var end = new Date(format(element.endTime, 'yyyy-MM-dd'))
+    var selecteddate = new Date(format(new Date(selected), 'yyyy-MM-dd'))
+    return end.getTime() == selecteddate.getTime()
+  }
+  isStartDate(element:Event, selected:string): boolean{
+    var start = new Date(format(element.startTime, 'yyyy-MM-dd'))
+    var selecteddate = new Date(format(new Date(selected), 'yyyy-MM-dd'))
+    return start.getTime() == selecteddate.getTime()
   }
 }
