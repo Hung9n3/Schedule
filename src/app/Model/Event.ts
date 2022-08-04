@@ -58,13 +58,35 @@ export class SortedEvent{
  }
  export class eventCard {
     key:number;
-    list: any[];
+    list: Event2[] = [];
     /**
      *
      */
-    constructor(key:number,
-        list: any[]) {
+    constructor(key:number, list: Event2[] = []) {
         this.key = key;
         this.list = list
+        }
+ }
+ export class Event2{
+    allDay: boolean;
+    endTime: Date;
+    startTime:Date;
+    title: string;
+    colorCode: string = '8ED921';
+    /**
+     *
+     */
+    constructor(  allDay: boolean,
+     endTime: Date,
+     startTime:Date,
+     title: string,
+     colorCode:string = '8ED921'
+     ) {
+         this.allDay=allDay;
+         this.endTime = endTime;
+         this.startTime = startTime;
+         this.title = title;
+         this.colorCode = colorCode;
     }
+    
  }

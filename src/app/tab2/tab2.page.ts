@@ -4,7 +4,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { format } from 'date-fns';
 import { CalendarComponent } from 'ionic2-calendar';
 import { CalModalPage } from '../pages/cal-modal/cal-modal.page';
-import {Event, eventCard} from '../Model/Event'
+import {Event, Event2, eventCard} from '../Model/Event'
 
 @Component({
   selector: 'app-tab2',
@@ -13,14 +13,14 @@ import {Event, eventCard} from '../Model/Event'
 })
 export class Tab2Page implements OnInit {
   eventSource = [
-    {title: 'event1',startTime: new Date("2022/8/1 10:00:00"),endTime: new Date("2022/8/1 13:00:00"),allDay: false, color:"#5494E6"},
-    {title: 'event2',startTime: new Date("2022/8/4 8:00:00"),endTime: new Date("2022/8/4 12:00:00"),allDay: false, color:"#5494E6"},
-    {title: 'event3',startTime: new Date("2022/8/6 8:00:00"),endTime: new Date("2022/8/7 12:00:00"),allDay: false, color:"#5494E6"},
-    {title: 'event4',startTime: new Date("2022/8/5 9:00:00"),endTime: new Date("2022/8/6 12:00:00"),allDay: false, color:"#5494E6"},
+    {title: 'event1',startTime: new Date("2022/8/1 10:00:00"),endTime: new Date("2022/8/1 13:00:00"),allDay: false, colorCode:"#5494E6"},
+    {title: 'event2',startTime: new Date("2022/8/4 8:00:00"),endTime: new Date("2022/8/4 12:00:00"),allDay: false, colorCode:"#5494E6"},
+    {title: 'event3',startTime: new Date("2022/8/6 8:00:00"),endTime: new Date("2022/8/7 12:00:00"),allDay: false, colorCode:"#5494E6"},
+    {title: 'event4',startTime: new Date("2022/8/5 9:00:00"),endTime: new Date("2022/8/6 12:00:00"),allDay: false, colorCode:"#5494E6"},
 
   ];
   eventCards :eventCard[] = [];
-  eventByDate = [];
+  eventByDate : Event2[] = [];
   viewTitle: string;
   calendar = {
     mode: "month",
@@ -52,24 +52,28 @@ export class Tab2Page implements OnInit {
   changeTitle(title) {
     this.viewTitle = title;
   }
-  async onEventSelected(event) {
-    // Use Angular date pipe for conversion
-    let start = formatDate(event.startTime, 'medium', this.locale);
-    let end = formatDate(event.endTime, 'medium', this.locale);
- 
-    const alert = await this.alertCtrl.create({
-      header: event.title,
-      subHeader: event.desc,
-      message: 'From: ' + start + '<br><br>To: ' + end,
-      buttons: ['OK'],
-    });
-    alert.present();
-  }
   changeMode(mode) {
     this.calendar.mode = mode;
 }
+
 onTimeSelected = (ev: { selectedTime: Date, events: any[], disabled: boolean }) => {
   this.eventByDate = ev.events;
+  console.log(this.eventByDate)
+  for(var i = 0; i <= this.eventByDate.length; i++ )
+  {
+    let exist = false;
+    for(var j = 0; j <= this.eventCards.length; j++)
+    {
+      if(this.eventByDate[i].startTime.getHours() == this.eventCards[j].key){
+        exist = true;
+        this.eventCards[j].list.push(this.eventByDate[i])
+        break;
+      }
+    }
+    if(exist == false) 
+    this.eventCards.push(new eventCard(this.eventByDate[i].startTime.getHours(), [this.eventByDate[i]]));
+  }
+  console.log(this.eventCards)
 }
   createRandomEvents() {
     var events = [];
