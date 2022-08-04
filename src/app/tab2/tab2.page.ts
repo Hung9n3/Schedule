@@ -17,7 +17,7 @@ export class Tab2Page implements OnInit {
   end1 = new Date(2022, 8,5,12,0,0,0)
   end2 = new Date(2022,8,7,14,0,0,0)
   calendar = {
-    mode: 'month',
+    mode: "month",
     currentDate: new Date(),
   };
 
