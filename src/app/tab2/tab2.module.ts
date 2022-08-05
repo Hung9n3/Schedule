@@ -7,7 +7,6 @@ import { Tab2Page } from './tab2.page';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { EventComponentModule } from '../event/event.module';
-import { CalModalPageModule } from '../pages/cal-modal/cal-modal.module';
 import { NgCalendarModule } from 'ionic2-calendar';
 
 @NgModule({
@@ -17,7 +16,6 @@ import { NgCalendarModule } from 'ionic2-calendar';
     FormsModule,
     Tab2PageRoutingModule,
     EventComponentModule,
-    CalModalPageModule,
     NgCalendarModule
   ],
   declarations: [Tab2Page]

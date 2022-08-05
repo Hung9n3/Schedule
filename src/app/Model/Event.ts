@@ -58,6 +58,7 @@ export class SortedEvent{
  }
  export class eventCard {
     key:number;
+    dayBegin: number;
     list: Event2[] = [];
     /**
      *

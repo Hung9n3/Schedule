@@ -1,8 +1,8 @@
 .indicator-container {
   display: flex;
   flex-direction: column;
-  padding-left: 0.5rem;
-  padding-bottom: 0.4rem;
+  width: 60%;
+  justify-content: center;
   align-items: center;
 }
 
@@ -17,8 +17,19 @@
 .with-event {
   background-color: transparent !important;
   border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+   justify-content: center;
+  align-items: center;
 }
-
+.eventcolor {
+  // background: var(--ion-color-success);
+  margin-bottom: 5px;
+  width: 7px;
+  height: 20px;
+  border-radius: 5px;
+  display: table-cell;
+}
 :host ::ng-deep {
   .event-detail-container {
     display: none;
@@ -35,6 +46,9 @@
   .weekview-allday-table {
     display: none;
   }
+  .weekview-normal-event-container{
+    display: none;
+  }
   .dayview-allday-table {
     display: none;
   }
@@ -48,31 +62,61 @@
   }
   .monthview-current {
     background-color: rgba(55, 76, 194, 0.397) !important;
-    border-radius: 5px;
+    border-radius: 15px;
     div {
-        color: white!important;
-    //   background-color: black!important;
-    //   color: white;
-    //   border-radius: 30px;
-    //   width: 30px;
-    //   height: 30px;
+      color: white !important;
+      //   background-color: black!important;
+      //   color: white;
+      //   border-radius: 30px;
+      //   width: 30px;
+      //   height: 30px;
     }
   }
+  .weekview-header {
+    tr {
+    padding: 10px;
+  }
+  vertical-align: top;
+}
+// .weekview-header text-center{
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+// }
+  .weekview-header td,
+  .weekview-header th,
   .monthview-datetable td,
   .monthview-datetable th {
     border: none !important;
     font-weight: bold;
   }
-  .monthview-disabled{
-    color: red!important;
+  // .weekview-header td,
+  // .weekview-header th{
+  //   width: fit-content;
+  //   height: fit-content;
+  // }
+  .text-muted {
+    p {
+      color: gray !important;
+    }
   }
-  .text-muted{
-    color: gray!important
+  .monthWeekend {
+    color: red;
   }
-  .weekModeHeader{
+
+  .weekModeHeader {
+    border: none !important;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  
+  .weekview-selected {
+    background-color: transparent !important;
+    outline: rgb(207, 97, 202) solid 2px !important;
+    border-radius: 5px;
+    div {
+      color: black !important;
+    }
+  }
 }
