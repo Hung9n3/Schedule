@@ -13,27 +13,39 @@
       <ion-segment-button (click)="changeMode('week')">
         <ion-label>Week</ion-label>
       </ion-segment-button>
-      <ion-segment-button (click)="changeMode('day')">
+      <!-- <ion-segment-button (click)="changeMode('day')">
         <ion-label>Day</ion-label>
-      </ion-segment-button>
+      </ion-segment-button> -->
     </ion-segment>
   </ion-toolbar>
-   <ion-row>
-      <ion-col size="6">
-        <ion-button
-          (click)="createRandomEvents()"
-          expand="block"
-          fill="outline"
-        >
-          Add random events
-        </ion-button>
-      </ion-col>
-      <ion-col size="6">
-        <ion-button (click)="removeEvents()" expand="block" fill="outline">
-          Remove all events
-        </ion-button>
-      </ion-col>
-    </ion-row>
+  <!-- <ion-row> -->
+  <!-- <ion-col size="4">
+      <ion-button (click)="createRandomEvents()" expand="block" fill="outline">
+        Add random events
+      </ion-button>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button (click)="removeEvents()" expand="block" fill="outline">
+        Remove all events
+      </ion-button>
+    </ion-col> -->
+  <!-- <ion-col size="5">
+      <ion-row>
+        <ion-item
+          ><ion-input
+            placeholder="input year-month-date"
+            [(ngModel)]="inputDate"
+            #ctrl="ngModel"
+            required
+          >
+          </ion-input>
+          <ion-button (click)="submitDate()" expand="block" fill="outline">
+            Go
+          </ion-button>
+        </ion-item>
+      </ion-row>
+    </ion-col>
+  </ion-row> -->
   <ion-row>
     <ion-col size="2">
       <div>
@@ -43,7 +55,7 @@
       </div>
     </ion-col>
     <ion-col class="ion-text-center" size="8">
-      <h2 slot="">{{viewTitle}}</h2>
+      <ion-button class="open-input-date" fill="clear" (click)="openInputDateModal()" ><h2>{{viewTitle}}</h2></ion-button>
     </ion-col>
     <ion-col size="2" class="ion-text-end">
       <div>
@@ -57,8 +69,6 @@
     [eventSource]="eventSource"
     [calendarMode]="calendar.mode"
     [currentDate]="calendar.currentDate"
-    (onTitleChanged)="changeTitle($event)"
-    (onTimeSelected)="onTimeSelected($event)"
     [startHour]="6"
     [endHour]="20"
     [step]="30"
@@ -69,6 +79,8 @@
     [startingDayWeek]="1"
     [startingDayMonth]="1"
     (onDayHeaderSelected)="onDayHeaderSelected($event)"
+    (onTitleChanged)="changeTitle($event)"
+    (onTimeSelected)="onTimeSelected($event)"
   >
   </calendar>
   <ion-item lines="none">
@@ -77,13 +89,13 @@
   </ion-item>
   <br />
   <ion-item *ngFor="let card of eventCards">
-    <ion-row style="width: 100%">
-      <ion-col size="2">
-        <p style="font-weight: bold">{{card.key}}:00</p>
+    <ion-row style="width: 100%; ">
+      <ion-col size="3">
+        <p style="font-weight: bold;vertical-align: top; margin: 0px!important;padding: 5px;">{{card.key}}:00</p>
       </ion-col>
       <ion-col size="auto">
         <ion-item lines="none" *ngFor="let event of card.list">
-          <ion-col
+          <ion-col style="padding: 0px;"
             ><div
               [ngStyle]="{'background-color': event.colorCode}"
               class="eventcolor"
@@ -119,39 +131,39 @@
         <div
           [ngStyle]="{'background-color': e.colorCode}"
           class="event-indicator"
-          *ngFor="let e of view.dates[row*7+col].events"
+          *ngFor="let e of view.dates[row*7+col].events.slice(0,5)"
         ></div>
       </div>
     </div>
   </ng-template>
   <ng-template #weekHeader let-viewDate="viewDate">
+    <div
+      [ngClass]="getHightlightClass(viewDate.date)"
+      [class.with-event]="viewDate.events.length"
+      tappable
+      (click)="onTimeSelectWeekmode(viewDate.date)"
+    >
+      <div>{{viewDate.date.toLocaleString('vi-vi', {weekday: 'short'})}}</div>
       <div
-        [ngClass]="getHightlightClass(viewDate.date)"
-        [class.with-event]="viewDate.events.length"
-        tappable
-        (click)="onTimeSelectWeekmode(viewDate.date)"
+        *ngIf="viewDate.date.getDay() !=6 && viewDate.date.getDay() !=0"
+        class="custom-day-header"
       >
-        <div>{{viewDate.date.toLocaleString('vi-vi', {weekday: 'short'})}}</div>
-        <div
-          *ngIf="viewDate.date.getDay() !=6 && viewDate.date.getDay() !=0"
-          class="custom-day-header"
-        >
-          {{ viewDate.dayHeader }}
-        </div>
-        <div
-          *ngIf="viewDate.date.getDay() ==6 || viewDate.date.getDay() ==0"
-          class="custom-day-header"
-          style="color: red"
-        >
-          {{ viewDate.dayHeader }}
-        </div>
-        <div class="indicator-container">
-          <div
-            [ngStyle]="{'background-color': e.event.colorCode}"
-            class="event-indicator"
-            *ngFor="let e of viewDate.events;"
-          ></div>
-        </div>
+        {{ viewDate.dayHeader }}
       </div>
+      <div
+        *ngIf="viewDate.date.getDay() ==6 || viewDate.date.getDay() ==0"
+        class="custom-day-header"
+        style="color: red"
+      >
+        {{ viewDate.dayHeader }}
+      </div>
+      <div class="indicator-container">
+        <div
+          [ngStyle]="{'background-color': e.event.colorCode}"
+          class="event-indicator"
+          *ngFor="let e of viewDate.events.slice(0,5)"
+        ></div>
+      </div>
+    </div>
   </ng-template>
 </ion-content>

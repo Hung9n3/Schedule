@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { CalendarComponent } from 'ionic2-calendar';
 import {Event, Event2, eventCard} from '../Model/Event'
 import { IWeekView, IWeekViewDateRow, IWeekViewRow } from 'ionic2-calendar/calendar';
+import { InputDateModalComponent } from '../pages/input-date-modal/input-date-modal.component';
 
 @Component({
   selector: 'app-tab2',
@@ -22,6 +23,8 @@ export class Tab2Page implements OnInit {
     {title: 'event7',startTime: new Date("2022/8/1 8:00:00"),endTime: new Date("2022/8/1 12:00:00"),allDay: true, colorCode:"#79ff4d"},
     {title: 'event8',startTime: new Date("2022/8/1 8:00:00"),endTime: new Date("2022/8/1 12:00:00"),allDay: true, colorCode:"#4ddbff"},
   ];
+  message:string = ""
+  inputDate:string = ""
   eventCards :eventCard[] = [];
   eventByDate : Event2[] = [];
   viewTitle: string;
@@ -59,12 +62,32 @@ export class Tab2Page implements OnInit {
     this.eventSource = this.eventSource
     this.calendar.mode = mode;
 }
-
+submitDate(){
+  if(this.inputDate == "") this.calendar.currentDate = new Date()
+  else this.calendar.currentDate = new Date(this.inputDate)
+}
 onDayHeaderSelected = (ev: { selectedTime: Date, events: any[], disabled: boolean }) => {
   console.log(ev.events)
   console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' + (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
 };
+async openInputDateModal() {
+  const modal = await this.modalCtrl.create({
+    component: InputDateModalComponent,
+  });
+  modal.present();
 
+  const { data, role } = await modal.onWillDismiss();
+
+  if (role === 'confirm' && data!=null) {
+    this.inputDate = `${data}`
+    console.log(this.inputDate)
+    this.submitDate()
+  }
+  if(role === 'confirm' && data == null)
+  { this.inputDate = ""
+    this.submitDate()}
+
+}
 onTimeSelected = (ev: { selectedTime: Date, events: any[], disabled: boolean }) => {
   this.eventByDate = []
   this.eventCards = []
@@ -146,15 +169,15 @@ onTimeSelected = (ev: { selectedTime: Date, events: any[], disabled: boolean }) 
     }
     this.eventSource = events;
   }
-  loadEvent(){
-    this.eventSource.push()
-    this.myCal.loadEvents();
-  }
+  // loadEvent(){
+  //   this.eventSource.push()
+  //   this.myCal.loadEvents();
+  // }
   removeEvents() {
     this.eventSource = [];
   }
-  markDisabled = (date: Date) => { let dateFormatted = this.datepipe.transform(date, "EEE") 
-  if (dateFormatted == "Th 7" || dateFormatted == "CN") { return true } else { return false } };
+  // markDisabled = (date: Date) => { let dateFormatted = this.datepipe.transform(date, "EEE") 
+  // if (dateFormatted == "Th 7" || dateFormatted == "CN") { return true } else { return false } };
 
   onTimeSelectWeekmode(day:Date){
     this.eventByDate = [];
@@ -181,9 +204,6 @@ onTimeSelected = (ev: { selectedTime: Date, events: any[], disabled: boolean }) 
   }
     console.log(this.eventCards);
   }
-  sortEvent(){
-    
-  }
   dayCompare(event:Event2, selected:Date): boolean{
     var start = new Date(format(event.startTime, 'yyyy-MM-dd'))
     var end = new Date(format(event.endTime, 'yyyy-MM-dd'))
@@ -209,5 +229,18 @@ onTimeSelected = (ev: { selectedTime: Date, events: any[], disabled: boolean }) 
   }
   return className
   }
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Please enter date, leave empty to back to today',
+      buttons: ['Go'],
+      inputs: [
+        {
+          placeholder: 'YYYY/MM/DD',
+          type:'date'
+        }
+      ],
+    });
 
+    await alert.present();
+  }
 }

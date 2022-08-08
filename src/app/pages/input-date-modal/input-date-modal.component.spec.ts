@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { CalModalPage } from './cal-modal.page';
+import { InputDateModalComponent } from './input-date-modal.component';
 
-describe('CalModalPage', () => {
-  let component: CalModalPage;
-  let fixture: ComponentFixture<CalModalPage>;
+describe('InputDateModalComponent', () => {
+  let component: InputDateModalComponent;
+  let fixture: ComponentFixture<InputDateModalComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalModalPage ],
+      declarations: [ InputDateModalComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CalModalPage);
+    fixture = TestBed.createComponent(InputDateModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

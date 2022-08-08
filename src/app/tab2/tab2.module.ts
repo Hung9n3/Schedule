@@ -8,6 +8,7 @@ import { Tab2Page } from './tab2.page';
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { EventComponentModule } from '../event/event.module';
 import { NgCalendarModule } from 'ionic2-calendar';
+import { InputDateModalComponent } from '../pages/input-date-modal/input-date-modal.component';
 
 @NgModule({
   imports: [
@@ -16,8 +17,9 @@ import { NgCalendarModule } from 'ionic2-calendar';
     FormsModule,
     Tab2PageRoutingModule,
     EventComponentModule,
-    NgCalendarModule
+    NgCalendarModule, 
   ],
-  declarations: [Tab2Page]
+  declarations: [Tab2Page,InputDateModalComponent
+  ]
 })
 export class Tab2PageModule {}
