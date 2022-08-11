@@ -47,7 +47,8 @@ export class Tab2Page implements OnInit {
     public datepipe: DatePipe
   ) {}
   ngOnInit(): void {
-    console.log(this.eventSource);
+    // console.log(this.eventSource);
+    // this.calendar.mode = 'month'
   }
   next() {
     this.myCal.slideNext();
@@ -67,8 +68,8 @@ submitDate(){
   else this.calendar.currentDate = new Date(this.inputDate)
 }
 onDayHeaderSelected = (ev: { selectedTime: Date, events: any[], disabled: boolean }) => {
-  console.log(ev.events)
-  console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' + (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
+  // console.log(ev.events)
+  // console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' + (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
 };
 async openInputDateModal() {
   const modal = await this.modalCtrl.create({
@@ -229,18 +230,31 @@ onTimeSelected = (ev: { selectedTime: Date, events: any[], disabled: boolean }) 
   }
   return className
   }
-  async presentAlert() {
-    const alert = await this.alertCtrl.create({
-      header: 'Please enter date, leave empty to back to today',
-      buttons: ['Go'],
-      inputs: [
-        {
-          placeholder: 'YYYY/MM/DD',
-          type:'date'
-        }
-      ],
-    });
+  // async presentAlert() {
+  //   const alert = await this.alertCtrl.create({
+  //     header: 'Please enter date, leave empty to back to today',
+  //     buttons: ['Go'],
+  //     inputs: [
+  //       {
+  //         placeholder: 'YYYY/MM/DD',
+  //         type:'date'
+  //       }
+  //     ],
+  //   });
 
-    await alert.present();
-  }
+  //   await alert.present();
+  // }
+  handlePan(ev){
+    console.log('current mode:' + this.calendar.mode)
+    console.log(ev.deltaY);
+    if(this.calendar.mode != "month" && ev.deltaY > 0 ){
+      this.calendar.mode = 'month'
+      console.log('change into ' +this.calendar.mode)
+    }
+    if(this.calendar.mode != "week" && ev.deltaY < 0){
+      this.calendar.mode = 'week'
+      console.log('change into ' + this.calendar.mode)
+  
+    }
+   }
 }

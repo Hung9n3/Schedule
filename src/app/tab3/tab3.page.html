@@ -1,65 +1,15 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
-      Ionic Calendar
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
- 
-<ion-content>
-  <ion-segment [(ngModel)]="calendar.mode">
-    <ion-segment-button value="month">
-      <ion-label>Month</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="week">
-      <ion-label>Week</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="day">
-      <ion-label>Day</ion-label>
-    </ion-segment-button>
-  </ion-segment>
- 
-  <ion-row>
-    <ion-col size="6">
-      <ion-button (click)="createRandomEvents()" expand="block" fill="outline">
-        Add random events
-      </ion-button>
-    </ion-col>
-    <ion-col size="6">
-      <ion-button (click)="removeEvents()" expand="block" fill="outline">
-        Remove all events
-      </ion-button>
-    </ion-col>
-  </ion-row>
- 
-  <ion-row>
-    <!-- Move back one screen of the slides -->
-    <ion-col size="2">
-      <ion-button fill="clear" (click)="back()">
-        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-col>
- 
-    <ion-col size="8" class="ion-text-center">
-      <h2>{{ viewTitle }}</h2>
-    </ion-col>
- 
-    <!-- Move forward one screen of the slides -->
-    <ion-col size="2">
-      <ion-button fill="clear" (click)="next()">
-        <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-col>
-  </ion-row>
- 
-  <calendar
-    [eventSource]="eventSource"
-    [showEventDetail]="false"
-    [calendarMode]="calendar.mode"
-    [currentDate]="calendar.currentDate"
-    (onTitleChanged)="changeTitle($event)"
-    (onDayHeaderSelected)="onDayHeaderSelected($event)"
-  >
-  </calendar>
- 
+<ion-content padding>
+  <ion-card (pan) = "handlePan($event)" style="height: 300px;">
+    <ion-card-content>
+      Pan
+  </ion-card-content>
+</ion-card>
+<ion-card (swipe) = "handleSwipe()">
+  <ion-card-content>
+    Swipe
+  </ion-card-content>
+</ion-card>
 </ion-content>
+<!-- <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+
+<div id="myElement"></div> -->

@@ -65,7 +65,8 @@
       </div>
     </ion-col>
   </ion-row>
-  <calendar
+  <div (pan) = "handlePan($event)">
+    <calendar
     [eventSource]="eventSource"
     [calendarMode]="calendar.mode"
     [currentDate]="calendar.currentDate"
@@ -83,6 +84,7 @@
     (onTimeSelected)="onTimeSelected($event)"
   >
   </calendar>
+  </div>
   <ion-item lines="none">
     <ion-text>lunar datetime</ion-text>
     <ion-icon slot="end" name="happy-outline"></ion-icon>

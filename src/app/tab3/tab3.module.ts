@@ -8,7 +8,19 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab3PageRoutingModule } from './tab3-routing.module';
 import { NgCalendarModule } from 'ionic2-calendar';
+import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule } from '@angular/platform-browser';
+import * as Hammer from 'hammerjs'
 
+export class CustomHammerConfig extends HammerGestureConfig{
+  overrides: { 
+    'pan': {
+      direction: Hammer.DIRECTION_ALL
+    }
+    'swipe': {
+      direction: Hammer.DIRECTION_ALL
+    }
+  };
+}
 @NgModule({
   imports: [
     IonicModule,
@@ -18,7 +30,10 @@ import { NgCalendarModule } from 'ionic2-calendar';
     NgCalendarModule,    
     RouterModule.forChild([{ path: '', component: Tab3Page }]),
     Tab3PageRoutingModule,
+    HammerModule
   ],
-  declarations: [Tab3Page]
+  declarations: [Tab3Page],
+  providers: [  {provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig},
+  ]
 })
 export class Tab3PageModule {}
